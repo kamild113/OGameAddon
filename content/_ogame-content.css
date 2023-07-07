@@ -145,6 +145,10 @@ input {
     background: url(../assets/images/V2/container_border.png) repeat-y top left, url(../assets/images/V2/container_border.png) repeat-y top right;
 }
 
+.addon-content .content-section .content .planet-link {
+    cursor: pointer;
+}
+
 .addon-content .content-section .footer {
     position: absolute;
     left: 0;

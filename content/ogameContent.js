@@ -124,6 +124,7 @@ function search() {
           row.innerHTML = "#" + (outputContent.children.length) + " &ensp; | " + planets[i].galaxy + ": " + planets[i].system  + " | Planet: " ;
   
           const planetLink = document.createElement("a");
+          planetLink.className = "planet-link";
           planetLink.innerText = planets[i].planetName;
           planetLink.onclick = () => {
             document.getElementById("galaxyInput").value = planets[i].galaxy;
@@ -187,7 +188,13 @@ function search() {
   
           const planetLink = document.createElement("a");
           planetLink.innerText = inactivePlanets[i].planetName;
-          planetLink.href = inactivePlanets[i].link;
+          planetLink.className = "planet-link";
+          planetLink.onclick = () => {
+            document.getElementById("galaxyInput").value = inactivePlanets[i].galaxy;
+            document.getElementById("systemInput").value = inactivePlanets[i].system;
+
+            injectScript('/content/getGalaxyData.js')
+          };
   
           row.appendChild(planetLink);
   

@@ -2,22 +2,24 @@ const DOMParser = require('dom-parser');
 
 export const readTableContent = (content, galaxy, system) => 
 {
-  const result = [];
+  let result = [];
   const parser = new DOMParser();
 
   const doc = parser.parseFromString(content, "text/html")
   const galaxyContent = doc.getElementsByClassName("galaxy-info")[0];
 
-  console.log(galaxyContent);
-  if(galaxyContent) {
-    readTable(galaxyContent, result, galaxy, system);
+  if(galaxyContent) 
+  {
+    result = readTable(galaxyContent, galaxy, system);
   }
 
   return result;
 }
   
-const readTable = (tableContent, result, galaxy, system) => 
+const readTable = (tableContent, galaxy, system) => 
 {
+  const result = [];
+
   for(let i = 0; i < tableContent.childNodes.length; i++) 
   {
       const child = tableContent.childNodes[i];
@@ -51,19 +53,21 @@ const readTable = (tableContent, result, galaxy, system) =>
     
             row.galaxy = galaxy;
             row.system = system;
-            //row.link = window.location.href;
     
             result.push(row);
           }
         }
       }
   }
+
+  return result;
 }
 
 const getStatus = (playerCol) => 
 {
   const tooltip = playerCol.getElementsByClassName("tooltip")[0];
-  if(tooltip){
+  if(tooltip)
+  {
     const tooltipHtml = tooltip.getAttribute("data-tooltip-content");
 
     return tooltipHtml.substring(
@@ -78,7 +82,8 @@ const getStatus = (playerCol) =>
 const getRanking = (playerNameSpan) => 
 {
   const tooltipHtml = playerNameSpan.getAttribute("data-tooltip-content");
-  if(tooltipHtml){
+  if(tooltipHtml)
+  {
     const pattern = /(?<=<a class='galaxy-shortcut-action' href='\/statistics\?rel=[a-f0-9-]+'>)\d+\.*\d+(?=<\/a>)/;
 
     const match = tooltipHtml.match(pattern);
